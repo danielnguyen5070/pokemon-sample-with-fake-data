@@ -5,7 +5,6 @@ import pokemonDetailReducer from '@features/pokemon/slices/pokemonDetailSlice'
 import createSagaMiddleware from 'redux-saga'
 import pokemonSaga from '@features/pokemon/sagas/pokemonDetailSaga'
 
-// 💡 Type-safe custom middleware
 const loggerMiddleware: Middleware = (storeAPI) => (next) => (action) => {
   if (isAction(action))
     console.log('🔹 Dispatching:', action.type)
