@@ -1,7 +1,7 @@
 import type { Pokemon } from '../types/pokemonTypes';
-import { getPokemonImageUrl } from '../api/pokemonAPI';
+import { getPokemonImageUrl } from '../utils/pokemonUtils';
 
-export function PokemonDetail({ p }: { p: Pokemon }) {
+export function PokemonItem({ p }: { p: Pokemon }) {
     return (
         <div
             key={p.name}

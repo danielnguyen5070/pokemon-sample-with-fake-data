@@ -10,5 +10,4 @@ export const AppRoutes = () => (
             <Route path="/pokemon/:name" element={<PokemonDetailPage />} />
         </Routes>
     </div>
-
 );

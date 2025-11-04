@@ -1,35 +1,7 @@
-// src/features/pokemon/pages/PokemonDetail.tsx
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams, Link } from "react-router-dom";
-import type { RootState } from "@app/store/store";
-import { fetchPokemonDetailRequest } from "../slices/pokemonDetailSlice";
-import { startAutoRefresh, stopAutoRefresh } from "../slices/pokemonDetailSlice";
+import { Link } from "react-router-dom";
+import { PokemonDetail as data } from "../data/pokemonData";
 
 export const PokemonDetailPage = () => {
-    const { name } = useParams();
-    const dispatch = useDispatch();
-    const { data, loading, error } = useSelector((state: RootState) => state.pokemonDetail);
-
-    useEffect(() => {
-        if (name) dispatch(fetchPokemonDetailRequest(name));
-    }, [name, dispatch]);
-
-
-    useEffect(() => {
-        // kick off auto-refresh for this Pokémon
-        if (name) dispatch(startAutoRefresh(name));
-
-        // cancel polling when leaving the page/component
-        return () => {
-            dispatch(stopAutoRefresh());
-        };
-    }, [dispatch, name]);
-
-    if (loading) return <p>Loading Pokémon detail...</p>;
-    if (error) return <p>Error: {error}</p>;
-    if (!data) return <p>No data found.</p>;
-
     return (
         <div className="min-h-screen p-8">
             <Link

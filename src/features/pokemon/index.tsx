@@ -1,30 +1,19 @@
-import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../app/store/hooks';
-import { getPokemons, setSearchTerm } from './slices/pokemonSlice';
+import { useState } from 'react';
 import Loader from '../../shared/components/Loader';
-import { PokemonDetail } from './components/PokemonItem';
+import { PokemonItem } from './components/PokemonItem';
 import { Link } from "react-router-dom";
-
+import { pokemons } from './data/pokemonData';
 const PokemonList = () => {
-    const dispatch = useAppDispatch();
-    const { pokemons, status, searchTerm } = useAppSelector((state) => state.pokemon);
-
-    useEffect(() => {
-        dispatch(getPokemons());
-    }, [dispatch]);
-
+    const [searchTerm, setSearchTerm] = useState('');
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(setSearchTerm(e.target.value));
+        setSearchTerm(e.target.value);
     };
 
-    console.log('Rendered PokemonList with', pokemons);
     const filteredPokemons = pokemons.filter((p) =>
         p.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    if (status === 'loading') return <Loader />;
-    if (status === 'failed')
-        return <p className="text-center text-red-500 mt-4">Failed to load Pokémon.</p>;
+    if (!pokemons) return <Loader />;
 
     return (
         <div className="p-6">
@@ -47,7 +36,7 @@ const PokemonList = () => {
                             to={`/pokemon/${p.name}`}
                             key={p.name}
                         >
-                            <PokemonDetail key={p.name} p={p} />
+                            <PokemonItem key={p.name} p={p} />
                         </Link>
                     ))
                 ) : (
